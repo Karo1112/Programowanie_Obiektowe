@@ -1,15 +1,15 @@
 package agh.ics.oop;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MapDirectionTest {
 
     @Test
     public void next_NORTH(){
-    MapDirection next = MapDirection.NORTH;
-    assertEquals(MapDirection.EAST, next.next());
+        MapDirection next = MapDirection.NORTH;
+        assertEquals(MapDirection.EAST, next.next());
     }
     @Test
     public void next_EAST(){
