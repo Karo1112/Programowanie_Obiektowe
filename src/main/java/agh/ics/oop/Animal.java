@@ -20,7 +20,7 @@ public class Animal {
         this.position = initialPosition;
         this.orientation = MapDirection.NORTH;
     }
-
+   // Z poniższego korzystam bo jest czytelniejsze jeśli chodzi o sprawdzanie każdego ruchu zwierzęcia i do testów.
     public String toString() {
         String orientation = null;
         if (this.orientation == MapDirection.NORTH){
@@ -37,7 +37,17 @@ public class Animal {
         }
         return "("+position.x+", " + position.y +")"+" Orientacja: " + orientation;
     }
-
+    // Zadanie 3 - czwarta kropka
+    /*
+    public String toString(){
+    return switch (this.orientation){
+        case NORTH -> "N";
+        case SOUTH -> "S";
+        case WEST -> "W";
+        case EAST -> "E";
+        };
+    }
+    */
 
     boolean isAt(Vector2d position) {
         return position != null && this.position.x == position.x && this.position.y == position.y;
