@@ -34,8 +34,8 @@ public class SimulationEngine implements IEngine{
             if(i != animals.size()) {
                 Animal animal = null;
                 animal = animals.get(i);
-                animal.move(directions, map);
-                out.println("Zwierze nr: "+ (i+1) + " pozycja: " + animal); //
+                animal.move(directions);
+                out.println("Zwierze nr: "+ (i+1) + " pozycja: " + animal);
             }
             i++;
             if(i == animals.size()){

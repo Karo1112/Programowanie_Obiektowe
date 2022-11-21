@@ -35,36 +35,40 @@ public class Animal {
         if (this.orientation == MapDirection.WEST){
             orientation = "W";
         }
-        return "("+position.x+", " + position.y +")"+" Orientacja: " + orientation;
+        return orientation;
     }
 
-
+    public MapDirection getOrientation(){
+        return this.orientation;
+    }
     boolean isAt(Vector2d position) {
         return position != null && this.position.x == position.x && this.position.y == position.y;
     }
 
-    Object move(MoveDirection direction, IWorldMap map) {
-         {
+    public Animal move(MoveDirection direction) {
+        Vector2d pos = null;
             switch (direction) {
                 case RIGHT -> {
                     this.orientation = this.orientation.next();
+                    pos = this.position;
                 }
                 case LEFT -> {
                     this.orientation = this.orientation.previous();
+                    pos = this.position;
                 }
                 case FORWARD -> {
-                    if(this.map.canMoveTo(this.position.add(Objects.requireNonNull(this.orientation.toUnitVector())))){
                        this.position =  this.position.add(Objects.requireNonNull(this.orientation.toUnitVector()));
-                   }
+                        pos = this.position;
                 }
                 case BACKWARD -> {
-                 if (this.map.canMoveTo(this.position.subtract(Objects.requireNonNull(this.orientation.toUnitVector())))){
                       this.position = this.position.subtract(Objects.requireNonNull(this.orientation.toUnitVector()));
-                    }
+                      pos = this.position;
                 }
             }
+            if (this.map.canMoveTo(pos)){
+                this.position = pos;
         }
-        return new Animal(this.orientation, this.position);
+        return this;
     }
 
     public Vector2d getPosition() {
@@ -72,4 +76,7 @@ public class Animal {
     }
 
 }
+
+
+
 

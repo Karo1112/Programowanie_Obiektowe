@@ -7,6 +7,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnimalTest {
+
+    IWorldMap map;
     Animal animal = new Animal(MapDirection.NORTH, new Vector2d(2,2));
     @Test
     public void orientacja_pozycja() {
