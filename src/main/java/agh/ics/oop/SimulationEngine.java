@@ -3,16 +3,14 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.System.out;
-
 public class SimulationEngine implements IEngine{
 
       private final List<Animal> animals = new ArrayList<>();
-      public  List<MoveDirection> direction;
+      public  MoveDirection[] direction;
       public IWorldMap map;
       public Vector2d[] initialPositions;
 
-    SimulationEngine(List<MoveDirection> direction, IWorldMap map, Vector2d[] initialPositions){
+    SimulationEngine(MoveDirection[] direction, IWorldMap map, Vector2d[] initialPositions){
         this.direction = direction;
         this.map = map;
 
@@ -26,32 +24,22 @@ public class SimulationEngine implements IEngine{
         }
     }
     @Override
-    public List<String> run() {
+    public void run() {
         int i = 0;
 
-        for (MoveDirection directions : direction) {
+        for (MoveDirection directions : this.direction) {
 
             if(i != animals.size()) {
                 Animal animal = null;
                 animal = animals.get(i);
-                animal.move(directions);
-                out.println("Zwierze nr: "+ (i+1) + " pozycja: " + animal);
+                animal.move(directions, this.map);
+                //out.println("Zwierze nr: "+ (i+1) + " pozycja: " + animal);
             }
             i++;
             if(i == animals.size()){
                 i = 0;
             }
         }
-        for(Animal animal: animals){ //Pokazuje końcowe pozycje zwierzaków
-            out.println(animal);
-        }
-        List<String> wynik = new ArrayList<>();
-        for(Animal animal: animals){ //Pokazuje końcowe pozycje zwierzaków
-            wynik.add(animal.toString());
-        }
-        out.println(wynik);
-        return wynik;
-
     }
 
 }

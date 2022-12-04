@@ -71,7 +71,7 @@ public class Vector2d {
         return x == vector2d.x && y == vector2d.y;
     }
     public int hashCode() {
-        return Objects.hash(x, y); //trzeba dodać hashCode
+        return Objects.hash(this.x, this.y); //trzeba dodać hashCode
     }
 }
 

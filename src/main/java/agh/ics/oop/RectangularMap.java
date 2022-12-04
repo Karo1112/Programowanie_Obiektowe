@@ -16,26 +16,14 @@ public class RectangularMap extends AbstractWorldMap {
 
     }
 
-    public boolean canMoveTo(Vector2d position) {
-        if(!isOccupied(position)) {
-            return position.follows(lowerLeft) && position.precedes(upperRight);
-        }
-        return false;
-    }
-    @Override
-    public Object objectAt(Vector2d position) {
-        for(Animal animal: animals){
-            Vector2d actual = animal.getPosition();
-            if(actual.x == position.x && actual.y == position.y){
-                return animal;
-            }
-        }
-        return null;
-    }
-
     public Vector2d[] map_size(){
         Vector2d[] size = new Vector2d[]{this.lowerLeft, this.upperRight};
         return size;
+    }
+
+    @Override
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition) {
+
     }
 }
 

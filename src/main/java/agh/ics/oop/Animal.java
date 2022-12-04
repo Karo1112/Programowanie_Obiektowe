@@ -1,5 +1,6 @@
 package agh.ics.oop;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Animal {
@@ -7,6 +8,7 @@ public class Animal {
     private IWorldMap map;
     private Vector2d position;
 
+    private final ArrayList<IPositionChangeObserver> observers = new ArrayList<>();
     // PYTANIE O KONSTRUKTOR:
     //Można stworzyc jeden konstruktor, który będzie zawierał orientacje, pozycje, i map
 
@@ -45,36 +47,57 @@ public class Animal {
         return position != null && this.position.x == position.x && this.position.y == position.y;
     }
 
-    public Animal move(MoveDirection direction) {
-        Vector2d pos = null;
+    void move(MoveDirection direction, IWorldMap map) {
+        {
             switch (direction) {
                 case RIGHT -> {
                     this.orientation = this.orientation.next();
-                    pos = this.position;
                 }
                 case LEFT -> {
                     this.orientation = this.orientation.previous();
-                    pos = this.position;
                 }
                 case FORWARD -> {
-                       this.position =  this.position.add(Objects.requireNonNull(this.orientation.toUnitVector()));
-                        pos = this.position;
+                    Vector2d next = this.position.add(Objects.requireNonNull(this.orientation.toUnitVector()));
+                    if (this.map.canMoveTo(next)) {
+                        if (this.map.isOccupied(next) == false || !(this.map.objectAt(next) instanceof Animal)) {
+                            positionChanged(this.position, next);
+                            this.position = next;
+                        }
+
+                    }
                 }
                 case BACKWARD -> {
-                      this.position = this.position.subtract(Objects.requireNonNull(this.orientation.toUnitVector()));
-                      pos = this.position;
+                    Vector2d next = this.position.subtract(Objects.requireNonNull(this.orientation.toUnitVector()));
+                    if (this.map.canMoveTo(next)) {
+                        if (this.map.isOccupied(next) == false || !(this.map.objectAt(next) instanceof Animal)) {
+                            positionChanged(this.position, next);
+                            this.position = next;
+                        }
+
+                    }
                 }
             }
-            if (this.map.canMoveTo(pos)){
-                this.position = pos;
+          //  new Animal(this.orientation, this.position);
         }
-        return this;
     }
 
     public Vector2d getPosition() {
         return this.position;
     }
 
+    void addObserver(IPositionChangeObserver observer){
+        this.observers.add(observer);
+    }
+
+    void removeObserver(IPositionChangeObserver observer){
+        this.observers.remove(observer);
+    }
+    void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        for (IPositionChangeObserver observer: this.observers)
+        {
+            observer.positionChanged(oldPosition, newPosition);
+        }
+    }
 }
 
 
