@@ -9,9 +9,8 @@ public class GrassField extends AbstractWorldMap {
 
     int n;
     Vector2d lowerLeftGrass, upperRightGrass;
-
     HashMap<Vector2d, Grass> grasses = new HashMap<>();
-    GrassField(int n) {
+    public GrassField(int n) {
             this.n = n;
             this.lowerLeft = new Vector2d(0, 0);
             this.upperRight = new Vector2d((int) sqrt(n * 10), (int) sqrt(n * 10));

@@ -7,24 +7,26 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     Vector2d lowerLeft, upperRight;
     Map<Vector2d, Animal> animals = new HashMap<>();
 
+
+
     @Override
     public boolean canMoveTo(Vector2d position) {
-            return position.follows(lowerLeft) && position.precedes(upperRight);
+        return position.follows(lowerLeft) && position.precedes(upperRight);
     }
     @Override
-    public boolean place(Animal animal) {
-        if(canMoveTo(animal.getPosition()) == false)
-        {
-            return false;
-        }
+    public boolean place(Animal animal){
         if (isOccupied(animal.getPosition()) && (objectAt(animal.getPosition()) instanceof Animal)) {
-            return false;
+            throw new IllegalArgumentException("Position: " + animal.getPosition() + "is already occupied.");
         }
-        else {
+        if(!canMoveTo(animal.getPosition()))
+        {
+            throw new IllegalArgumentException("You cannot move to this position: " + animal.getPosition());
+        }
+
             animals.put(animal.getPosition(), animal);
             animal.addObserver(this);
             return true;
-        }
+
     }
     @Override
     public boolean isOccupied(Vector2d position) {
@@ -40,10 +42,11 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         return new MapVisualizer(this).draw(size[0], size[1]);
     }
 
-    protected abstract Vector2d[] map_size();
+    public abstract Vector2d[] map_size();
 
     public void positionChanged(Vector2d oldPosition, Vector2d newPosition)
     {
         animals.put(newPosition, animals.remove(oldPosition));
+
     }
 }

@@ -48,37 +48,35 @@ public class Animal {
     }
 
     void move(MoveDirection direction, IWorldMap map) {
-        {
-            switch (direction) {
-                case RIGHT -> {
-                    this.orientation = this.orientation.next();
-                }
-                case LEFT -> {
-                    this.orientation = this.orientation.previous();
-                }
-                case FORWARD -> {
-                    Vector2d next = this.position.add(Objects.requireNonNull(this.orientation.toUnitVector()));
-                    if (this.map.canMoveTo(next)) {
-                        if (this.map.isOccupied(next) == false || !(this.map.objectAt(next) instanceof Animal)) {
-                            positionChanged(this.position, next);
-                            this.position = next;
-                        }
-
+        switch (direction) {
+            case RIGHT -> {
+                this.orientation = this.orientation.next();
+            }
+            case LEFT -> {
+                this.orientation = this.orientation.previous();
+            }
+            case FORWARD -> {
+                Vector2d next = this.position.add(Objects.requireNonNull(this.orientation.toUnitVector()));
+                if (this.map.canMoveTo(next)) {
+                    if (this.map.isOccupied(next) == false || !(this.map.objectAt(next) instanceof Animal)) {
+                        positionChanged(this.position, next);
+                        this.position = next;
                     }
-                }
-                case BACKWARD -> {
-                    Vector2d next = this.position.subtract(Objects.requireNonNull(this.orientation.toUnitVector()));
-                    if (this.map.canMoveTo(next)) {
-                        if (this.map.isOccupied(next) == false || !(this.map.objectAt(next) instanceof Animal)) {
-                            positionChanged(this.position, next);
-                            this.position = next;
-                        }
 
-                    }
                 }
             }
-          //  new Animal(this.orientation, this.position);
+            case BACKWARD -> {
+                Vector2d next = this.position.subtract(Objects.requireNonNull(this.orientation.toUnitVector()));
+                if (this.map.canMoveTo(next)) {
+                    if (this.map.isOccupied(next) == false || !(this.map.objectAt(next) instanceof Animal)) {
+                        positionChanged(this.position, next);
+                        this.position = next;
+                    }
+
+                }
+            }
         }
+        //  new Animal(this.orientation, this.position);
     }
 
     public Vector2d getPosition() {

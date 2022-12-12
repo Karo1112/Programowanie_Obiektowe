@@ -6,7 +6,7 @@ public class Vector2d {
     final public int x;
     final public int y;
 
-    Vector2d(int x, int y) {
+    public Vector2d(int x, int y) {
         this.x = x;
         this.y = y;
     }
